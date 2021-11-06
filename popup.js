@@ -26,10 +26,15 @@ const findOrUpdateCartId = async (cartId) => {
   }
 };
 
-findOrUpdateCartId(randomString());
-
 const handleNewCartIdBtnClicked = () => {
-  rerenderCartId(randomString());
+  // save newly generated cart id
+  const newCartId = randomString();
+  storage
+    .set(cartKey, newCartId)
+    .then(() => {
+      rerenderCartId(newCartId);
+    })
+    .catch(console.log);
 };
 
 newCartIdBtn.addEventListener("click", handleNewCartIdBtnClicked);
@@ -39,9 +44,14 @@ const disableFeatures = () => {
   newCartIdBtn.classList.add("disabled");
 };
 
-// ask content-script whether to disable certain features
-sendMessage({ type: FEATURES_DISABLED })
-  .then((disable) => {
-    if (disable) disableFeatures();
-  })
-  .catch(disableFeatures);
+const init = () => {
+  findOrUpdateCartId(randomString());
+  // ask content-script whether to disable certain features
+  sendMessage({ type: FEATURES_DISABLED })
+    .then((disable) => {
+      if (disable) disableFeatures();
+    })
+    .catch(disableFeatures);
+};
+
+init();
