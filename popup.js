@@ -1,4 +1,10 @@
-import { randomString, sendMessage, FEATURES_DISABLED } from "./utils.js";
+import {
+  randomString,
+  sendMessage,
+  FEATURES_DISABLED,
+  storage,
+  cartKey,
+} from "./utils.js";
 
 const cartId = document.querySelector(".cart-id");
 const newCartIdBtn = document.querySelector(".new-cart-id-btn");
@@ -8,6 +14,19 @@ const warningText = document.querySelector(".warning");
 const rerenderCartId = (value) => {
   cartId.textContent = value;
 };
+
+// find or update cartId in storage and update dom
+const findOrUpdateCartId = async (cartId) => {
+  const result = await storage.get(cartKey);
+  if (result) {
+    rerenderCartId(result);
+  } else {
+    await storage.set(cartKey, cartId);
+    rerenderCartId(cartId);
+  }
+};
+
+findOrUpdateCartId(randomString());
 
 const handleNewCartIdBtnClicked = () => {
   rerenderCartId(randomString());

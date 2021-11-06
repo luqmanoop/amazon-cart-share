@@ -28,3 +28,14 @@ export const sendMessage = async (msg) => {
     });
   });
 };
+
+export const storage = {
+  set: async (key, value) => {
+    return chrome.storage.sync.set({ [key]: value });
+  },
+  get: async (key) => {
+    return chrome.storage.sync.get(key).then((result) => {
+      return result[key];
+    });
+  },
+};
