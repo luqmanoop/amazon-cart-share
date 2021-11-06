@@ -1,0 +1,27 @@
+{
+  "name": "Amazon Cart Share",
+  "description": "Fast and easy way to share your Amazon cart with everyone.",
+  "version": "1",
+  "manifest_version": 3,
+  "icons": {
+    "16": "images/icon_16.png",
+    "32": "images/icon_32.png",
+    "48": "images/icon_48.png",
+    "128": "images/icon_128.png"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*/cart/view.html*"],
+      "js": ["script.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["utils.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
