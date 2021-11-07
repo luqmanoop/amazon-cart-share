@@ -45,12 +45,21 @@ const disableFeatures = () => {
   newCartIdBtn.classList.add("disabled");
 };
 
+const copyCartUrlToClipboard = async (cartUrl) => {
+  if (!cartUrl) throw new Error("no cart url");
+
+  await window.navigator.clipboard.writeText(cartUrl);
+  cartId.classList.add("animate");
+};
+
+cartId.addEventListener("animationend", () => {
+  cartId.classList.remove("animate");
+});
+
 copyUrlBtn.addEventListener("click", () => {
   const cartId = document.querySelector(".cart-id").textContent;
   sendMessage({ type: COPY_CART_URL, payload: cartId })
-    .then((result) => {
-      console.log(result);
-    })
+    .then(copyCartUrlToClipboard)
     .catch(console.log);
 });
 

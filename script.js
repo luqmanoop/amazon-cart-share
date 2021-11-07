@@ -61,8 +61,18 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
 
     case utils.COPY_CART_URL:
       const cart = getCart();
+
+      if (!cart) {
+        utils.storage.get(utils.cartUrlKey).then((url) => {
+          reply({ payload: url });
+        });
+        return true;
+      }
+
       // make a fetch request to server to save cart
-      saveCart(message.payload, cart);
-      break;
+      saveCart(message.payload, cart)
+        .then((url) => utils.storage.set(utils.cartUrlKey, url))
+        .then((url) => reply({ payload: url }));
+      return true; // IMPORTANT if we're calling `reply` in async functions
   }
 });

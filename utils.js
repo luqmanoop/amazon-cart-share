@@ -4,6 +4,7 @@ export const FEATURES_DISABLED = "FEATURES_DISABLED";
 /* --- end --- */
 
 export const cartKey = chrome.runtime.id;
+export const cartUrlKey = chrome.runtime.id + "-url";
 
 export const randomString = (length = 7) =>
   Array(length)
@@ -31,7 +32,7 @@ export const sendMessage = async (msg) => {
 
 export const storage = {
   set: async (key, value) => {
-    return chrome.storage.sync.set({ [key]: value });
+    return chrome.storage.sync.set({ [key]: value }).then(() => value);
   },
   get: async (key) => {
     return chrome.storage.sync.get(key).then((result) => {
