@@ -36,6 +36,22 @@ const getCart = () => {
   return cartData;
 };
 
+const saveCart = async (id, cart) => {
+  return fetch("https://amazon-cart-share.codeshifu.dev/cart", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id,
+      cart,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => data.url)
+    .catch(console.log);
+};
+
 chrome.runtime.onMessage.addListener((message, sender, reply) => {
   switch (message.type) {
     case utils.FEATURES_DISABLED:
@@ -46,6 +62,7 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
     case utils.COPY_CART_URL:
       const cart = getCart();
       // make a fetch request to server to save cart
+      saveCart(message.payload, cart);
       break;
   }
 });
