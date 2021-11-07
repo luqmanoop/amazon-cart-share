@@ -4,6 +4,7 @@ import {
   FEATURES_DISABLED,
   storage,
   cartKey,
+  COPY_CART_URL,
 } from "./utils.js";
 
 const cartId = document.querySelector(".cart-id");
@@ -43,6 +44,15 @@ const disableFeatures = () => {
   newCartIdBtn.removeEventListener("click", handleNewCartIdBtnClicked);
   newCartIdBtn.classList.add("disabled");
 };
+
+copyUrlBtn.addEventListener("click", () => {
+  const cartId = document.querySelector(".cart-id").textContent;
+  sendMessage({ type: COPY_CART_URL, payload: cartId })
+    .then((result) => {
+      console.log(result);
+    })
+    .catch(console.log);
+});
 
 const init = () => {
   findOrUpdateCartId(randomString());
