@@ -5,6 +5,7 @@ import {
   storage,
   cartKey,
   COPY_CART_URL,
+  cartUrlKey,
 } from "./utils.js";
 
 const cartId = document.querySelector(".cart-id");
@@ -59,6 +60,8 @@ cartId.addEventListener("animationend", () => {
 copyUrlBtn.addEventListener("click", () => {
   const cartId = document.querySelector(".cart-id").textContent;
   sendMessage({ type: COPY_CART_URL, payload: cartId })
+    .then(copyCartUrlToClipboard)
+    .catch(() => storage.get(cartUrlKey))
     .then(copyCartUrlToClipboard)
     .catch(console.log);
 });
