@@ -1,7 +1,7 @@
 {
   "name": "Amazon Cart Share",
   "description": "Fast and easy way to share your Amazon cart with everyone.",
-  "version": "1",
+  "version": "0.1.0",
   "manifest_version": 3,
   "icons": {
     "16": "images/icon_16.png",
