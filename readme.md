@@ -13,4 +13,4 @@ Amazon cart share is a chrome extension that allows you to generate a shareable 
 
 ## License
 
-This project is licensed under [MIT](https://github.com/codeshifu/amazon-cart-share/blob/main/LICENSE)
+This project is licensed under [MIT](https://github.com/codeshifu/amazon-cart-share/blob/main/license)
